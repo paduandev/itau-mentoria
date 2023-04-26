@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import jakarta.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class HandlerException {
     
@@ -23,6 +25,12 @@ public class HandlerException {
         } );
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> handlerValidationConstraintException(ConstraintViolationException ex) {
+       
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }
