@@ -9,7 +9,7 @@ public final class App {
     public static void main(String[] args) {
         
         Customer client = new Customer("João");
-        Movie movie = new Movie("Homem Aranha 2", Movie.NEW_RELEASE);
+        Movie movie = Movie.createMovie("Homem Aranha 2", Movie.NEW_RELEASE);
         Rental rent = new Rental(movie, 2);
 
         client.addRental(rent);

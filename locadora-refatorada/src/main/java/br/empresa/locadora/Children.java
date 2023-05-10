@@ -1,8 +1,8 @@
 package br.empresa.locadora;
 
-public class Regular extends Movie {
+public class Children extends Movie {
 
-    public Regular(String title) {
+    public Children(String title) {
         super(title);
     }
 
@@ -11,10 +11,10 @@ public class Regular extends Movie {
     }
 
     public double getAmount(int daysRented) {
-        double thisAmount = 2;
+        double thisAmount = 1.5;
 
-        if (daysRented > 2)
-            thisAmount += (daysRented - 2) * 1.5;
+        if (daysRented > 3)
+            thisAmount += (daysRented - 3) * 1.5;
 
         return thisAmount;
     }
