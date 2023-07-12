@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: rota1
+          uri: http://httpbin.org
+          predicates:
+            - Path=/hello
+          filters:
+            - SetPath=/get
