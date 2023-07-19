@@ -56,7 +56,8 @@ public class PacienteService {
     public List<AtendimentoDTO> listAtendimento(long id) {
         Optional<Paciente> pacienteOptional = repo.findById(id);
         if (pacienteOptional.isPresent()) {
-            // TODO: ajustar
+            
+            // Solicita os dados de Atendimento para outro serviço
             
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<List<AtendimentoDTO>> response = restTemplate.exchange(
@@ -69,7 +70,7 @@ public class PacienteService {
             if(response.getStatusCode() == HttpStatus.OK) {
                 return response.getBody();
             }
-            // return pacienteOptional.get().getAtendimentos().stream().map(AtendimentoDTO::new).toList();
+            
         }
         return new ArrayList<AtendimentoDTO>();
     }
