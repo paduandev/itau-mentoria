@@ -1,5 +1,6 @@
 package br.gama.itau.hospital.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class AtendimentoController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/paciente/{id}")
+    public ResponseEntity<List<AtendimentoDTO>> getByPaciente(@PathVariable long id){
+        return ResponseEntity.ok(service.getByPaciente(id));
     }
 
 }

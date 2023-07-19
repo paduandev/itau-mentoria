@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import br.gama.pacienteservice.dto.AtendimentoDTO;
 import br.gama.pacienteservice.dto.PacienteDTO;
@@ -51,7 +57,18 @@ public class PacienteService {
         Optional<Paciente> pacienteOptional = repo.findById(id);
         if (pacienteOptional.isPresent()) {
             // TODO: ajustar
-            return new ArrayList<AtendimentoDTO>();
+            
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<List<AtendimentoDTO>> response = restTemplate.exchange(
+                "http://localhost:8081/hospital/atendimento/paciente/" + id,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<AtendimentoDTO>>(){}
+            );
+
+            if(response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            }
             // return pacienteOptional.get().getAtendimentos().stream().map(AtendimentoDTO::new).toList();
         }
         return new ArrayList<AtendimentoDTO>();
