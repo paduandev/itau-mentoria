@@ -1,0 +1,18 @@
+
+server:
+    port: 8080
+
+spring:
+    cloud:
+        gateway:
+            routes:
+                - id: paciente
+                  uri: http://localhost:8082
+                  predicates:
+                    - Path=/hospital/paciente/**
+                  filters:
+                    - RewritePath=/hospital/(?<segment>.*), /v1/$\{segment}
+                - id: hospital
+                  uri: http://localhost:8081/hospital
+                  predicates:
+                    - Path=/hospital/**
