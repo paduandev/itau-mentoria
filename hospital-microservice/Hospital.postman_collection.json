@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "6f6963d7-aaaf-40b9-a295-6e512fbeb029",
+		"name": "Hospital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4917883"
+	},
+	"item": [
+		{
+			"name": "Novo Paciente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Paciente 1\",\r\n    \"cpf\": \"111.111.111-1\",\r\n    \"telefone\": \"(11) 1111-1111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/hospital/paciente"
+			},
+			"response": []
+		},
+		{
+			"name": "Paciente por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hospital/paciente/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Paciente por CPF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hospital/paciente/cpf/111.111.111-1"
+			},
+			"response": []
+		},
+		{
+			"name": "Novo Atendimento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPaciente\": 1,\r\n    \"exames\": \"Exame de sangue\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/hospital/atendimento"
+			},
+			"response": []
+		},
+		{
+			"name": "Atendimento por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hospital/atendimento/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Fecha Atendimento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medicamentos\": \"Vitamina C; Vitamina D\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/hospital/atendimento/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Paciente",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"telefone\":\"(12) 1111-1111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/hospital/paciente"
+			},
+			"response": []
+		},
+		{
+			"name": "lista atendimentos do paciente por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hospital/paciente/1/atendimentos"
+			},
+			"response": []
+		},
+		{
+			"name": "lista atendimentos do paciente por CPF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/hospital/paciente/cpf/111.111.111-1/atendimentos"
+			},
+			"response": []
+		},
+		{
+			"name": "apagar paciente",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "localhost:8080/hospital/paciente/1"
+			},
+			"response": []
+		}
+	]
+}
