@@ -16,6 +16,7 @@ import br.gama.pacienteservice.dto.AtendimentoDTO;
 import br.gama.pacienteservice.dto.PacienteDTO;
 import br.gama.pacienteservice.model.Paciente;
 import br.gama.pacienteservice.repository.PacienteRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -56,30 +57,42 @@ public class PacienteService {
     public List<AtendimentoDTO> listAtendimento(long id) {
         Optional<Paciente> pacienteOptional = repo.findById(id);
         if (pacienteOptional.isPresent()) {
-            
+
             // Solicita os dados de Atendimento para outro serviço
-            
+
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<List<AtendimentoDTO>> response = restTemplate.exchange(
-                "http://localhost:8081/hospital/atendimento/paciente/" + id,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<AtendimentoDTO>>(){}
-            );
+                    "http://localhost:8080/hospital/atendimento/paciente/" + id,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<AtendimentoDTO>>() {
+                    });
 
-            if(response.getStatusCode() == HttpStatus.OK) {
+            if (response.getStatusCode() == HttpStatus.OK) {
                 return response.getBody();
             }
-            
+
         }
         return new ArrayList<AtendimentoDTO>();
     }
 
+    @Transactional
     public boolean delete(long id) {
         Optional<Paciente> pacienteOptional = repo.findById(id);
         if (pacienteOptional.isPresent()) {
-            // TODO: ajustar
-            repo.deleteById(id);
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Void> response = restTemplate.exchange(
+                    "http://localhost:8080/hospital/atendimento/paciente/" + id,
+                    HttpMethod.DELETE,
+                    null,
+                    new ParameterizedTypeReference<Void>() {
+                    });
+
+            if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
+                repo.deleteById(id);
+            }
+
             return true;
         }
         return false;
@@ -88,9 +101,20 @@ public class PacienteService {
     public List<AtendimentoDTO> listAtendimentoByCpf(String cpf) {
         Optional<Paciente> pacienteOptional = repo.findByCpf(cpf);
         if (pacienteOptional.isPresent()) {
-            // TODO: ajustar
-            return new ArrayList<AtendimentoDTO>();
-            // return pacienteOptional.get().getAtendimentos().stream().map(AtendimentoDTO::new).toList();
+
+            long id = pacienteOptional.get().getId();
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<List<AtendimentoDTO>> response = restTemplate.exchange(
+                    "http://localhost:8080/hospital/atendimento/paciente/" + id,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<AtendimentoDTO>>() {
+                    });
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            }
         }
         return new ArrayList<AtendimentoDTO>();
     }
