@@ -2,6 +2,10 @@ package br.gama.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.context.annotation.Bean;
+
+import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 public class GatewayApplication {
@@ -10,4 +14,9 @@ public class GatewayApplication {
 		SpringApplication.run(GatewayApplication.class, args);
 	}
 
+	@Bean
+	KeyResolver userKeyResolver() {
+		// return exchange -> Mono.just("1");
+		return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress());
+	}
 }

@@ -1,10 +1,15 @@
-
 server:
     port: 8080
 
 spring:
     cloud:
         gateway:
+            default-filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 2 # número max de req por secound
+                    redis-rate-limiter.burstCapacity: 3 # capacidade máxima de pico
+                    redis-rate-limiter.requestedTokens: 1 # númermo de tokens
             routes:
                 - id: paciente
                   uri: http://localhost:8082
