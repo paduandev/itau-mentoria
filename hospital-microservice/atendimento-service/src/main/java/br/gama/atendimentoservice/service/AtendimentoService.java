@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import br.gama.atendimentoservice.dto.AtendimentoDTO;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class AtendimentoService {
 
     private final AtendimentoRepo repo;
+    private final KafkaTemplate<String, String> templateKafka;
+    
 
     public List<Atendimento> getAll() {
         return (List<Atendimento>) repo.findAll();
@@ -47,6 +50,7 @@ public class AtendimentoService {
             optional.get().setMedicamentos(medicamentos);
             optional.get().setFechado(true);
             repo.save(optional.get());
+            templateKafka.send("receitas", optional.get().getMedicamentos());
             return true;
         }
         return false;
