@@ -1,7 +1,7 @@
 package br.gama.hexagonal.infrastructure.jpa;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import br.gama.hexagonal.domain.model.Transfer;
 import jakarta.persistence.Entity;
@@ -28,7 +28,7 @@ public class TransferEntity {
     private long accountSourceNumber;
     private long accountTargetNumber;
     private BigDecimal value;
-    private LocalDate dateTime;
+    private LocalDateTime dateTime;
 
     public Transfer toTransfer() {
         return Transfer.builder()

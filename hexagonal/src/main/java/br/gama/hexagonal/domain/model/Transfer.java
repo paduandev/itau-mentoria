@@ -1,7 +1,7 @@
 package br.gama.hexagonal.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +18,6 @@ public class Transfer {
     private long accountSourceNumber;
     private long accountTargetNumber;
     private BigDecimal value;
-    private LocalDate dateTime;
+    private LocalDateTime dateTime;
 
 }

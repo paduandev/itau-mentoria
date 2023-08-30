@@ -1,5 +1,8 @@
 package br.gama.hexagonal.infrastructure.adapter;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import br.gama.hexagonal.domain.model.Transfer;
@@ -23,6 +26,12 @@ public class TransferRepository implements TransferUseCase {
     public Transfer load(long idTransfer) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'load'");
+    }
+
+    @Override
+    public List<TransferEntity> loadByDate(long idAccount, LocalDate dateFrom, LocalDate dateTo) {
+        return repo.findByAccountSourceNumberOrAccountTargetNumber(idAccount, idAccount);
+
     }
 
 }
