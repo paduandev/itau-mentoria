@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gama.jwtexample.dto.LoginRequest;
+import br.gama.jwtexample.dto.LoginResponse;
 import br.gama.jwtexample.model.MyUser;
 import br.gama.jwtexample.security.JwtService;
+import br.gama.jwtexample.service.MyUserService;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,17 +23,19 @@ public class AuthenticationController {
     private JwtService jwtService;
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+
         MyUser user = new MyUser();
         user.setEmail(loginRequest.getUsername());
-        user.setPassword(loginRequest.getPassword());
 
-        return ResponseEntity.ok( jwtService.generateToken(user) );
+        String token = jwtService.generateToken(user);
+
+        return ResponseEntity.ok( new LoginResponse(user.getUsername(), token) );
     }
 
-    @GetMapping("/{token}")
-    public Boolean verify(@PathVariable String token) {
-        MyUser user = new MyUser(1L, "myuser", "1234", "USER");
-        return jwtService.isTokenValid(token, user);
-    }
+    // @GetMapping("/{token}")
+    // public Boolean verify(@PathVariable String token) {
+    //     MyUser user = new MyUser(1L, "myuser", "1234", "USER");
+    //     return jwtService.isTokenValid(token, user);
+    // }
 }
