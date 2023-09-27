@@ -27,12 +27,11 @@ public class AuthenticationController {
         user.setPassword(loginRequest.getPassword());
 
         return ResponseEntity.ok( jwtService.generateToken(user) );
-
     }
 
     @GetMapping("/{token}")
     public Boolean verify(@PathVariable String token) {
-        MyUser user = new MyUser("Emerson1", "abc123", "USER");
-        return jwtService.isTokenvalid(token, user);
+        MyUser user = new MyUser(1L, "myuser", "1234", "USER");
+        return jwtService.isTokenValid(token, user);
     }
 }

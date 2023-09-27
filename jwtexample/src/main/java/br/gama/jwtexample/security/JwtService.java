@@ -24,10 +24,10 @@ public class JwtService {
     private String SECRET_KEY = "012345678901234567890123456789012345678901234567890123456789012345678901234";
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> extracClaims = new HashMap<>();
+        Map<String, Object> extractClaims = new HashMap<>();
 
         return Jwts.builder()
-                .setClaims(extracClaims)
+                .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername()) // Subject será o username 
                 .setIssuer("Gama") //quem está gerando
                 .setIssuedAt(new Date(System.currentTimeMillis())) // a data que foi gerado
@@ -43,10 +43,10 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
-        return extracClaims(token, Claims::getSubject);
+        return extractClaims(token, Claims::getSubject);
     }
 
-    public <T> T extracClaims(String token , Function <Claims, T> claimResolver) {
+    public <T> T extractClaims(String token , Function <Claims, T> claimResolver) {
         Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
@@ -59,9 +59,9 @@ public class JwtService {
             .getBody();
     }
 
-    public boolean isTokenvalid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         String username = extractUsername(token);
-        Date expiration = extracClaims(token, Claims::getExpiration);
-        return username.equals(userDetails.getUsername()) && expiration.before(new Date());
+        Date expiration = extractClaims(token, Claims::getExpiration);
+        return username.equals(userDetails.getUsername()) && expiration.after(new Date());
     }
 }

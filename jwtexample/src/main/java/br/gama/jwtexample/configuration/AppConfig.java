@@ -11,10 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class AppConfig {
 
-    // @Bean
-    // PasswordEncoder passwordEncoder() {
-    //     return new BCryptPasswordEncoder(); // esse será o algoritmo de criptografia da senha
-    // }
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // esse será o algoritmo de criptografia da senha
+    }
 
     // @Bean
     // UserDetailsService userDatailsService() {
