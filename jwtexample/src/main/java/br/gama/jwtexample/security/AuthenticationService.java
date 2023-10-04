@@ -23,6 +23,7 @@ public class AuthenticationService {
                 .orElseThrow(()-> new UsernameNotFoundException("Usuário ou senha inválido"));
 
         // verifica por meio do Authentication Manager se o username e password são validos 
+        // caso o login/senha sejam inválidos, ele lança uma exception
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
             loginRequest.getUsername(), loginRequest.getPassword()));
 
